@@ -6,6 +6,7 @@ Provides in-memory SQLite database, sample data, and test utilities.
 
 import sqlite3
 import tempfile
+import threading
 from pathlib import Path
 from typing import Generator
 
@@ -33,6 +34,31 @@ def temp_db_path() -> Generator[Path, None, None]:
 
 
 @pytest.fixture
+def temp_settings_file(temp_db_path: Path) -> Generator[Path, None, None]:
+    """
+    Create a temporary settings file for theme testing.
+
+    Args:
+        temp_db_path: Temporary database path fixture (used for base temp dir).
+
+    Yields:
+        Path to temporary settings file.
+    """
+    # Use the same temp directory as the database
+    settings_path = temp_db_path.parent / "theme_settings.json"
+    
+    # Remove existing settings file if it exists
+    if settings_path.exists():
+        settings_path.unlink()
+    
+    yield settings_path
+    
+    # Clean up after test
+    if settings_path.exists():
+        settings_path.unlink()
+
+
+@pytest.fixture
 def connection_manager(temp_db_path: Path) -> Generator[ConnectionManager, None, None]:
     """
     Create a ConnectionManager instance with a temporary database.
@@ -45,7 +71,7 @@ def connection_manager(temp_db_path: Path) -> Generator[ConnectionManager, None,
     """
     # Reset singleton state before creating new instance
     ConnectionManager._instance = None
-    ConnectionManager._lock = type(ConnectionManager)._lock.__class__()
+    ConnectionManager._lock = threading.Lock()
     
     cm = ConnectionManager(database_path=temp_db_path)
     yield cm
