@@ -1,36 +1,39 @@
 ```
-# Database files
-*.db
-
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-env/
-venv/
+
+# Database
+shoukat_pos/data/*.db
+
+# Dependencies
 .venv/
-.ENV
-.ENV.local
-.env.*
-.pytest_cache/
-.mypy_cache/
+venv/
+env/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Coverage
 .coverage
 coverage/
 htmlcov/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+# Build artifacts
+dist/
+build/
+*.egg-info/
 ```

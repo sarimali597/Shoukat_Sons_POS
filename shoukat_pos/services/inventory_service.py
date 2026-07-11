@@ -20,6 +20,14 @@ from database.queries import (
 )
 
 
+class InventoryService:
+    """Service class for inventory operations."""
+    
+    def __init__(self, connection_manager=None):
+        """Initialize inventory service."""
+        self.cm = connection_manager
+
+
 def deduct_stock(conn: sqlite3.Connection, variant_id: int, qty: int) -> bool:
     """
     Deduct stock from variant and its batches in FIFO order.
