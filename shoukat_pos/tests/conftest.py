@@ -67,13 +67,20 @@ def connection_manager(temp_db_path: Path) -> Generator[ConnectionManager, None,
         temp_db_path: Temporary database path fixture.
 
     Yields:
-        ConnectionManager instance configured for testing.
+        ConnectionManager instance configured for testing with schema initialized.
     """
     # Reset singleton state before creating new instance
     ConnectionManager._instance = None
     ConnectionManager._lock = threading.Lock()
     
     cm = ConnectionManager(database_path=temp_db_path)
+    
+    # Initialize database with schema and seed data
+    conn = cm.get_read_connection()
+    create_tables(conn)
+    seed_data(conn)
+    conn.close()
+    
     yield cm
     
     # Clean up singleton state after test
