@@ -215,6 +215,62 @@ def create_tables(conn: sqlite3.Connection) -> None:
         )
     """)
 
+    # Returns table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS returns (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sale_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            reason TEXT NOT NULL,
+            total_refund INTEGER DEFAULT 0,
+            return_date TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            CONSTRAINT fk_returns_sale FOREIGN KEY (sale_id) 
+                REFERENCES sales(id) ON DELETE CASCADE,
+            CONSTRAINT fk_returns_user FOREIGN KEY (user_id) 
+                REFERENCES users(id) ON DELETE RESTRICT
+        )
+    """)
+
+    # Return items table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS return_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            return_id INTEGER NOT NULL,
+            sale_item_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            refund_amount INTEGER NOT NULL,
+            CONSTRAINT fk_return_items_return FOREIGN KEY (return_id) 
+                REFERENCES returns(id) ON DELETE CASCADE,
+            CONSTRAINT fk_return_items_sale_item FOREIGN KEY (sale_item_id) 
+                REFERENCES sale_items(id) ON DELETE RESTRICT
+        )
+    """)
+
+    # Exchanges table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS exchanges (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sale_id INTEGER NOT NULL,
+            old_item_id INTEGER NOT NULL,
+            new_variant_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            price_difference INTEGER DEFAULT 0,
+            reason TEXT NOT NULL,
+            user_id INTEGER NOT NULL,
+            exchange_date TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            CONSTRAINT fk_exchanges_sale FOREIGN KEY (sale_id) 
+                REFERENCES sales(id) ON DELETE CASCADE,
+            CONSTRAINT fk_exchanges_old_item FOREIGN KEY (old_item_id) 
+                REFERENCES sale_items(id) ON DELETE RESTRICT,
+            CONSTRAINT fk_exchanges_new_variant FOREIGN KEY (new_variant_id) 
+                REFERENCES variants(id) ON DELETE RESTRICT,
+            CONSTRAINT fk_exchanges_user FOREIGN KEY (user_id) 
+                REFERENCES users(id) ON DELETE RESTRICT
+        )
+    """)
+
     # Audit log table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS audit_log (
