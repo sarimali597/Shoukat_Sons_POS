@@ -180,6 +180,41 @@ def create_tables(conn: sqlite3.Connection) -> None:
         )
     """)
 
+    # Held sales table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS held_sales (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_id INTEGER,
+            user_id INTEGER NOT NULL,
+            cart_data TEXT NOT NULL,
+            status TEXT DEFAULT 'held',
+            created_at TEXT NOT NULL,
+            resolved_at TEXT,
+            CONSTRAINT fk_held_sales_customer FOREIGN KEY (customer_id) 
+                REFERENCES customers(id) ON DELETE SET NULL,
+            CONSTRAINT fk_held_sales_user FOREIGN KEY (user_id) 
+                REFERENCES users(id) ON DELETE RESTRICT
+        )
+    """)
+
+    # Credit payments table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS credit_payments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_id INTEGER NOT NULL,
+            amount INTEGER NOT NULL,
+            payment_method TEXT NOT NULL,
+            notes TEXT,
+            user_id INTEGER,
+            payment_date TEXT NOT NULL,
+            payment_ref TEXT,
+            CONSTRAINT fk_credit_payments_customer FOREIGN KEY (customer_id) 
+                REFERENCES customers(id) ON DELETE CASCADE,
+            CONSTRAINT fk_credit_payments_user FOREIGN KEY (user_id) 
+                REFERENCES users(id) ON DELETE SET NULL
+        )
+    """)
+
     # Audit log table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS audit_log (
