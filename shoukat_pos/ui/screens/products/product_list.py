@@ -3,8 +3,7 @@ import customtkinter as ctk
 from typing import Dict, List, Optional
 from ui.theme import ThemeManager
 from ui.components import DataTable, SearchBar, EmptyState
-from services.product_service import ProductService
-from services.inventory_service import InventoryService
+from services import product_service, inventory_service
 from database.connection import ConnectionManager
 
 
@@ -17,8 +16,8 @@ class ProductListScreen(ctk.CTkFrame):
         self.router = router
         self.user_info = user_info
         self.cm = ConnectionManager()
-        self.product_service = ProductService(self.cm)
-        self.inventory_service = InventoryService(self.cm)
+        self.product_service = product_service
+        self.inventory_service = inventory_service
         
         self._setup_ui()
         self._load_products()

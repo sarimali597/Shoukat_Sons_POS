@@ -249,23 +249,82 @@ class POSApp(ctk.CTk):
         
         self.router.register_screen("print_labels", print_labels_factory)
         
-        # Placeholder screens for now (to be implemented in subsequent stages)
-        def make_placeholder(title: str) -> Callable[[], ctk.CTkFrame]:
-            def factory() -> ctk.CTkFrame:
-                frame = ctk.CTkFrame(self.main_area)
-                label = ctk.CTkLabel(
-                    frame,
-                    text=f"{title} Screen - Coming Soon",
-                    font=self._theme.get_font("heading"),
-                )
-                label.pack(expand=True)
-                return frame
-            
-            return factory
+        # Sales screens
+        def new_sale_factory() -> ctk.CTkFrame:
+            from ui.screens.sales.new_sale import NewSaleScreen
+            return NewSaleScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
         
-        screens = ["sales", "customers", "reports", "settings", "add_product"]
-        for screen in screens:
-            self.router.register_screen(screen, make_placeholder(screen.replace("_", " ").title()))
+        self.router.register_screen("new_sale", new_sale_factory)
+        
+        def credit_sale_factory() -> ctk.CTkFrame:
+            from ui.screens.sales.credit_sale import CreditSaleScreen
+            return CreditSaleScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("credit_sale", credit_sale_factory)
+        
+        def held_sales_factory() -> ctk.CTkFrame:
+            from ui.screens.sales.held_sales import HeldSalesScreen
+            return HeldSalesScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("held_sales", held_sales_factory)
+        
+        def returns_factory() -> ctk.CTkFrame:
+            from ui.screens.sales.returns import ReturnsScreen
+            return ReturnsScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("returns", returns_factory)
+        
+        def exchange_factory() -> ctk.CTkFrame:
+            from ui.screens.sales.exchange import ExchangeScreen
+            return ExchangeScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("exchange", exchange_factory)
+        
+        # Customer screens
+        def customer_manager_factory() -> ctk.CTkFrame:
+            from ui.screens.customers.customer_manager import CustomerManagerScreen
+            return CustomerManagerScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("customers", customer_manager_factory)
+        
+        # Report screens
+        def sales_report_factory() -> ctk.CTkFrame:
+            from ui.screens.reports.sales_report import SalesReportScreen
+            return SalesReportScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("sales_report", sales_report_factory)
+        
+        def stock_report_factory() -> ctk.CTkFrame:
+            from ui.screens.reports.stock_report import StockReportScreen
+            return StockReportScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("stock_report", stock_report_factory)
+        
+        def profit_report_factory() -> ctk.CTkFrame:
+            from ui.screens.reports.profit_report import ProfitReportScreen
+            return ProfitReportScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("profit_report", profit_report_factory)
+        
+        def customer_report_factory() -> ctk.CTkFrame:
+            from ui.screens.reports.customer_report import CustomerReportScreen
+            return CustomerReportScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("customer_report", customer_report_factory)
+        
+        # Settings screens
+        def general_settings_factory() -> ctk.CTkFrame:
+            from ui.screens.settings.general_settings import GeneralSettingsScreen
+            return GeneralSettingsScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("settings", general_settings_factory)
+        
+        # Product screens (additional)
+        def add_product_factory() -> ctk.CTkFrame:
+            from ui.screens.products.add_product import AddProductScreen
+            return AddProductScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("add_product", add_product_factory)
 
     def _toggle_theme(self) -> None:
         """Toggle between light and dark modes."""

@@ -23,6 +23,14 @@ from database.queries import (
 )
 
 
+class ProductService:
+    """Service class for product operations."""
+    
+    def __init__(self, connection_manager=None):
+        """Initialize product service."""
+        self.cm = connection_manager
+
+
 def _generate_style_code(conn: sqlite3.Connection, category_code: str) -> str:
     """
     Generate the next sequential style code for a category.

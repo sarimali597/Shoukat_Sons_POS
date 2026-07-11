@@ -3,8 +3,7 @@ import customtkinter as ctk
 from typing import Dict, Optional
 from ui.theme import ThemeManager
 from ui.dialogs.password_dialog import PasswordDialog
-from services.inventory_service import InventoryService
-from services.product_service import ProductService
+from services import inventory_service, product_service
 from database.connection import ConnectionManager
 
 
@@ -17,8 +16,8 @@ class QuickRestockScreen(ctk.CTkFrame):
         self.router = router
         self.user_info = user_info
         self.cm = ConnectionManager()
-        self.inventory_service = InventoryService(self.cm)
-        self.product_service = ProductService(self.cm)
+        self.inventory_service = inventory_service
+        self.product_service = product_service
         
         self._setup_ui()
     

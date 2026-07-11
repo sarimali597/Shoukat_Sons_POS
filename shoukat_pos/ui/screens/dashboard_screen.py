@@ -3,8 +3,7 @@ import customtkinter as ctk
 from typing import Dict, List, Optional
 from ui.theme import ThemeManager
 from ui.components import StatCard, DataTable
-from services.report_service import ReportService
-from services.inventory_service import InventoryService
+from services import report_service, inventory_service
 from database.connection import ConnectionManager
 from datetime import datetime, timedelta
 
@@ -18,8 +17,8 @@ class DashboardScreen(ctk.CTkFrame):
         self.cm = ConnectionManager()
         self.user_info = user_info
         self.router = router
-        self.report_service = ReportService(self.cm)
-        self.inventory_service = InventoryService(self.cm)
+        self.report_service = report_service
+        self.inventory_service = inventory_service
         
         self._setup_ui()
         self._refresh_data()

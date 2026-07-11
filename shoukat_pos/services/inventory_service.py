@@ -26,6 +26,40 @@ class InventoryService:
     def __init__(self, connection_manager=None):
         """Initialize inventory service."""
         self.cm = connection_manager
+    
+    def get_low_stock_variants(self, conn=None):
+        """Get variants at or below reorder point.
+        
+        Args:
+            conn: Optional database connection. If not provided, uses connection manager.
+            
+        Returns:
+            List of low-stock Variant objects.
+        """
+        if conn is None and self.cm:
+            with self.cm.get_write_connection() as conn:
+                return self._get_low_stock(conn)
+        elif conn:
+            return self._get_low_stock(conn)
+        else:
+            return []
+    
+    def _get_low_stock(self, conn):
+        """Internal method to get low stock variants."""
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT v.*, s.name as style_name
+            FROM variants v
+            JOIN styles s ON v.style_id = s.id
+            WHERE v.quantity <= v.reorder_point
+            ORDER BY v.quantity
+            """
+        )
+        rows = cursor.fetchall()
+        cursor.close()
+        from database.models import Variant
+        return [Variant.from_row(row) for row in rows]
 
 
 def deduct_stock(conn: sqlite3.Connection, variant_id: int, qty: int) -> bool:
