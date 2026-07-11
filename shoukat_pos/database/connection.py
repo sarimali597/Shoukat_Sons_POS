@@ -98,7 +98,6 @@ class ConnectionManager:
         cursor.execute(f"PRAGMA temp_store={DB_TEMP_STORE}")
         cursor.execute(f"PRAGMA secure_delete={DB_SECURE_DELETE}")
         cursor.execute(f"PRAGMA wal_autocheckpoint={DB_WAL_AUTOCHECKPOINT}")
-        cursor.execute("PRAGMA row_factory=sqlite3.Row")
         conn.commit()
         cursor.close()
 

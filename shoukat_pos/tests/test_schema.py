@@ -72,7 +72,6 @@ class TestSchemaCreation:
         cursor = db_connection.cursor()
         cursor.execute("PRAGMA index_list(variants)")
         indexes = cursor.fetchall()
-        cursor.close()
 
         # Look for the unique constraint index
         unique_found = False
@@ -83,7 +82,8 @@ class TestSchemaCreation:
                 if set(cols) == {"style_id", "size", "color"}:
                     unique_found = True
                     break
-
+        
+        cursor.close()
         assert unique_found
 
 
