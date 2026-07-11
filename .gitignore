@@ -1,49 +1,64 @@
 ```
 # Database files
 *.db
+*.sqlite
+*.sqlite3
 
-# Environment variables
+# Environment files
 .env
 .env.local
-*.env.*
+.env.*
+
+# Logs
+*.log
 
 # Dependencies
 node_modules/
 .venv/
 venv/
 __pycache__/
-*.egg-info/
-
-# Build artifacts
+.mypy_cache/
+.pytest_cache/
 dist/
 build/
 target/
-*.pyc
-*.pyo
-*.pyd
+.gradle/
 
-# Logs
-*.log
+# Editors
+.vscode/
+.idea/
 
-# OS generated files
+# OS
 .DS_Store
 Thumbs.db
 
-# Editor files
-.vscode/
-.idea/
+# Temp files
+*.tmp
 *.swp
 *.swo
 
-# Coverage reports
-.coverage
-htmlcov/
+# Coverage
 coverage/
+htmlcov/
+.coverage
 
-# Python specific
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
 ```
