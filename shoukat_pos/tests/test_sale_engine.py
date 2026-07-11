@@ -460,7 +460,12 @@ class TestVoidSale:
             (1, "M", "Blue", "TEST001", 10, datetime.now(timezone.utc).isoformat(), datetime.now(timezone.utc).isoformat()),
         )
         variant_id = cursor.lastrowid
-        restock_variant(conn, variant_id, 10, 50000, "abc", {"date_received": datetime.now(timezone.utc).isoformat()})
+        # Create batch with 10 units - don't double-count in variant.quantity
+        # The INSERT already set quantity=10, so we just create the batch record
+        cursor.execute(
+            "INSERT INTO batches (variant_id, purchase_price, secret_code, quantity_received, quantity_remaining, date_received, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (variant_id, 50000, "abc", 10, 10, datetime.now(timezone.utc).isoformat(), datetime.now(timezone.utc).isoformat()),
+        )
 
         cursor.execute(
             "INSERT INTO users (username, password_hash, role, is_active, created_at) VALUES (?, ?, ?, 1, ?)",
