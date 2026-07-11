@@ -34,14 +34,14 @@ def main() -> int:
         # Stub: In Section 8, this will check FIRST_RUN_FLAG_FILE
         # and run the first-run wizard if needed
         
-        # Launch main UI - stub for Section 2
-        # from ui.app import App
-        # app = App()
-        # app.run()
-        
+        # Launch main UI application
         print("Shoukat Sons Garments POS - Starting...")
         print("Database initialized successfully.")
-        print("UI layer coming in Section 2.")
+        
+        from ui.app import POSApp
+        
+        app = POSApp()
+        app.mainloop()
         
         return 0
         
