@@ -20,13 +20,14 @@ class PasswordDialog(ctk.CTkToplevel):
     Returns (confirmed: bool, password: str) tuple.
     """
 
-    def __init__(self, parent: ctk.CTkBaseClass, title: str = "Enter Password") -> None:
+    def __init__(self, parent: ctk.CTkBaseClass, title: str = "Enter Password", message: str = "") -> None:
         """
         Initialize the password dialog.
 
         Args:
             parent: Parent window.
             title: Dialog title.
+            message: Optional message to display above password field.
         """
         super().__init__(parent)
         assert parent is not None, "parent cannot be None"
@@ -41,11 +42,11 @@ class PasswordDialog(ctk.CTkToplevel):
         self.grab_set()  # Make modal
 
         # Center on parent
-        self.geometry("350x180")
+        self.geometry("350x200")
         self._center_on_parent(parent)
 
         # Create UI
-        self._create_ui()
+        self._create_ui(message)
 
         # Bind enter key
         self.bind("<Return>", lambda e: self._on_confirm())
@@ -63,12 +64,13 @@ class PasswordDialog(ctk.CTkToplevel):
 
         self.geometry(f"+{x}+{y}")
 
-    def _create_ui(self) -> None:
+    def _create_ui(self, message: str = "") -> None:
         """Create dialog UI elements."""
         # Label
+        label_text = message if message else "Please enter your password:"
         label = ctk.CTkLabel(
             self,
-            text="Please enter your password:",
+            text=label_text,
             font=self._theme.get_font("body"),
         )
         label.pack(pady=(20, 10))
