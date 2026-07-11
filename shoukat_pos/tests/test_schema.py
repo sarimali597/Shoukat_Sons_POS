@@ -36,6 +36,9 @@ class TestSchemaCreation:
             "held_sales",
             "credit_payments",
             "audit_log",
+            "returns",
+            "return_items",
+            "exchanges",
             "sqlite_sequence",  # Auto-created for AUTOINCREMENT
         }
 
