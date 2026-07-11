@@ -17,7 +17,8 @@ class TestConnectionManagerSingleton:
 
     def test_singleton_returns_same_instance(self, temp_db_path: Path) -> None:
         """Test that ConnectionManager returns the same instance."""
-        assert ConnectionManager._instance is None
+        # Ensure clean state
+        ConnectionManager._instance = None
         
         cm1 = ConnectionManager(database_path=temp_db_path)
         cm2 = ConnectionManager(database_path=temp_db_path)

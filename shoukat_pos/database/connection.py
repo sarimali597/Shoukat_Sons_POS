@@ -126,6 +126,17 @@ class ConnectionManager:
         """
         return self._create_connection()
 
+    def get_connection(self) -> sqlite3.Connection:
+        """
+        Get a general purpose connection (alias for get_read_connection).
+
+        This method exists for backward compatibility and testing.
+
+        Returns:
+            SQLite connection configured for general use.
+        """
+        return self.get_read_connection()
+
     def get_write_connection(self) -> sqlite3.Connection:
         """
         Get a connection for write operations.
