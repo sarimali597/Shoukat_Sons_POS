@@ -4,36 +4,45 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.Python
+*.so
+*.egg-info/
+.eggs/
 
 # Database
-shoukat_pos/data/*.db
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*
 
 # Dependencies
 .venv/
 venv/
 env/
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Editors
-.vscode/
-.idea/
-
-# Coverage
-.coverage
-coverage/
-htmlcov/
+ENV/
 
 # Build artifacts
 dist/
 build/
 *.egg-info/
+.coverage
+htmlcov/
+.mypy_cache/
+.pytest_cache/
+.tox/
+.cover/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 ```

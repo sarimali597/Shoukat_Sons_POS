@@ -3,7 +3,7 @@ import customtkinter as ctk
 from typing import Dict, List, Optional
 from ui.theme import ThemeManager
 from ui.components import DataTable
-from services.product_service import ProductService
+from services import product_service
 from hardware.label_printer import LabelPrinter
 from utils.barcode_generator import generate_barcode_image
 from database.connection import ConnectionManager
@@ -18,7 +18,7 @@ class PrintLabelsScreen(ctk.CTkFrame):
         self.router = router
         self.user_info = user_info
         self.cm = ConnectionManager()
-        self.product_service = ProductService(self.cm)
+        self.product_service = product_service
         
         self.selected_variants: List[Dict] = []
         self.printer = None
