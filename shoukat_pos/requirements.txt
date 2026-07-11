@@ -1,0 +1,15 @@
+customtkinter>=5.2
+tksheet>=7.0
+pywin32>=306
+python-escpos>=3.0
+python-barcode>=0.15
+fpdf2>=2.7
+bcrypt>=4.0
+cryptography>=42.0
+sqlalchemy>=2.0
+alembic>=1.13
+pytest>=8.0
+pytest-cov>=5.0
+mypy>=1.9
+ruff>=0.4
+pyinstaller>=6.0
