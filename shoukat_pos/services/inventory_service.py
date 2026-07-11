@@ -72,7 +72,6 @@ def deduct_stock(conn: sqlite3.Connection, variant_id: int, qty: int) -> bool:
     # Update variant quantity
     cursor.execute(UPDATE_VARIANT_QUANTITY, (-qty, variant_id))
 
-    conn.commit()
     cursor.close()
 
     return True
