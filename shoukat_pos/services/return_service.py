@@ -427,9 +427,10 @@ class ReturnService:
             # Get original sale item details
             cursor.execute(
                 """
-                SELECT si.*, v.style_id, v.base_price as old_price
+                SELECT si.*, v.style_id, s.base_sale_price as old_price
                 FROM sale_items si
                 JOIN variants v ON si.variant_id = v.id
+                JOIN styles s ON v.style_id = s.id
                 WHERE si.id = ? AND si.sale_id = ?
                 """,
                 (original_item_id, original_sale_id),
@@ -450,10 +451,10 @@ class ReturnService:
             old_qty = old_item["quantity"]
             old_unit_price = old_item["unit_price"]
 
-            # Get new variant details
+            # Get new variant details with style base_sale_price
             cursor.execute(
                 """
-                SELECT v.*, s.id as style_id FROM variants v
+                SELECT v.*, s.id as style_id, s.base_sale_price FROM variants v
                 JOIN styles s ON v.style_id = s.id
                 WHERE v.id = ?
                 """,
@@ -479,7 +480,7 @@ class ReturnService:
                     "Can only exchange within the same style/product"
                 )
 
-            new_unit_price = new_variant["base_price"]
+            new_unit_price = new_variant["base_sale_price"]
 
             # Calculate price difference
             old_total = old_unit_price * old_qty
