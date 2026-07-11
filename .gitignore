@@ -1,53 +1,39 @@
 ```
-# Database files
-*.db
-data/*.db
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Environment variables
+# Logs and temp files
+*.log
+*.tmp
+
+# Environment
 .env
 .env.local
 *.env.*
 
+# Editors
+.vscode/
+.idea/
+
 # Dependencies
-node_modules/
-venv/
 .venv/
-__pycache__/
-*.egg-info/
+venv/
+node_modules/
+
+# Build artifacts
 dist/
 build/
 target/
-.gradle/
-.mypy_cache/
-.pytest_cache/
 
-# Logs
-*.log
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# Coverage reports
+# Coverage
+.coverage
 coverage/
 htmlcov/
-.coverage
 
-# Compiled files
-*.pyc
-*.class
-*.o
-*.exe
-*.dll
-*.so
-*.a
-*.obj
-*.out
+# Testing
+.pytest_cache/
+.mypy_cache/
 ```
