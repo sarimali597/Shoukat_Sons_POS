@@ -1,39 +1,44 @@
-```
+```gitignore
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
+*.py[cod]
+*$py.class
 *.so
-*.egg-info/
-dist/
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
 *.egg
+MANIFEST
 
 # Environment
+.env
+.env.local
+.env.*
 .venv/
 venv/
-env/
 ENV/
 
-# Logs
-*.log
-
-# Testing
-.pytest_cache/
-.coverage
-coverage/
-htmlcov/
-
-# Database
-shoukat_pos/data/*.db
-
-# Editors
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.tmp
+
+# Logs
+*.log
 
 # OS
 .DS_Store
