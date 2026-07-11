@@ -186,9 +186,9 @@ class POSApp(ctk.CTk):
         nav_items = [
             ("Dashboard", "dashboard"),
             ("Products", "products"),
-            ("Sales", "sales"),
-            ("Customers", "customers"),
-            ("Reports", "reports"),
+            ("Sales", "new_sale"),
+            ("Customers", "customer_manager"),
+            ("Reports", "sales_report"),
             ("Settings", "settings"),
         ]
 
