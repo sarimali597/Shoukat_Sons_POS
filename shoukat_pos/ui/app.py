@@ -182,13 +182,13 @@ class POSApp(ctk.CTk):
         )
         self.logo_label.pack(pady=20)
 
-        # Navigation items
+        # Navigation items - must match registered screen names
         nav_items = [
             ("Dashboard", "dashboard"),
             ("Products", "products"),
-            ("Sales", "new_sale"),
-            ("Customers", "customer_manager"),
-            ("Reports", "sales_report"),
+            ("New Sale", "new_sale"),
+            ("Customers", "customers"),
+            ("Sales Report", "sales_report"),
             ("Settings", "settings"),
         ]
 
