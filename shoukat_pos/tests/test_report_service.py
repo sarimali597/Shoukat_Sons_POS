@@ -129,6 +129,12 @@ def populated_db(connection_manager):
         )
         sale2_id = cursor.lastrowid
 
+        # Update customer's total_due for the credit sale
+        cursor.execute(
+            "UPDATE customers SET total_due = total_due + ? WHERE id = ?",
+            (500000, customer_id),
+        )
+
         # Create sale items
         cursor.execute(
             "INSERT INTO sale_items (sale_id, variant_id, batch_id, quantity, unit_price, tax_amount, total_price, is_returned) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
