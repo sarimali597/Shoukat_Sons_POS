@@ -6,9 +6,17 @@ __pycache__/
 *.pyd
 .Python
 env/
-.venv/
 venv/
-ENV/
+.venv/
+.ENV
+.venv.bak
+env.bak
+
+# Testing
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
 
 # Database
 *.db
@@ -17,52 +25,12 @@ ENV/
 # Logs
 *.log
 
-# Temporary files
-*.tmp
-*.temp
-*~
-
-# Coverage
-.coverage
-htmlcov/
-.coverage.*
-coverage.xml
-
-# Testing
-.pytest_cache/
-.mypy_cache/
-.hypothesis/
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# OS
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 ```

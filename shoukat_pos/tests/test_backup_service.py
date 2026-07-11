@@ -6,6 +6,7 @@ and cleanup operations.
 """
 
 import os
+import threading
 from pathlib import Path
 
 import pytest
@@ -19,7 +20,12 @@ from services.backup_service import BackupInfo, BackupService
 def connection_manager(tmp_path: Path) -> ConnectionManager:
     """Create a ConnectionManager with a temporary database."""
     db_path = tmp_path / "test_backup.db"
-    cm = ConnectionManager(str(db_path))
+    
+    # Reset singleton state
+    ConnectionManager._instance = None
+    ConnectionManager._lock = threading.Lock()
+    
+    cm = ConnectionManager(db_path)
     
     # Initialize database with schema and seed data
     conn = cm.get_connection()
@@ -66,7 +72,11 @@ class TestBackupCreation:
         empty_dir = tmp_path / "empty"
         empty_dir.mkdir()
         
-        cm = ConnectionManager(str(empty_dir / "nonexistent.db"))
+        # Reset singleton state
+        ConnectionManager._instance = None
+        ConnectionManager._lock = threading.Lock()
+        
+        cm = ConnectionManager(empty_dir / "nonexistent.db")
         service = BackupService(cm, empty_dir)
         
         with pytest.raises(FileNotFoundError):

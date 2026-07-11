@@ -5,6 +5,7 @@ Handles database backup creation, restoration, encryption,
 and integrity verification. Supports automatic scheduled backups.
 """
 
+import base64
 import hashlib
 import os
 import shutil
@@ -65,6 +66,7 @@ class BackupService:
         self.cm = connection_manager
         self.data_dir = Path(data_dir)
         self.backup_dir = self.data_dir / "backups"
+        self._db_path = connection_manager._database_path  # Use the actual database path from CM
         self._ensure_backup_dir()
 
     def _ensure_backup_dir(self) -> None:
@@ -73,15 +75,8 @@ class BackupService:
 
     def _get_db_path(self) -> Path:
         """Get path to the main database file."""
-        # The database path is typically in data_dir
-        db_path = self.data_dir / "pos.db"
-        if not db_path.exists():
-            # Try alternative locations
-            for pattern in ["*.db"]:
-                matches = list(self.data_dir.glob(pattern))
-                if matches:
-                    return matches[0]
-        return db_path
+        # Use the database path from connection manager
+        return self._db_path
 
     def _derive_key(self, password: str, salt: bytes) -> bytes:
         """
@@ -92,7 +87,7 @@ class BackupService:
             salt: Random salt for key derivation.
 
         Returns:
-            32-byte derived key.
+            32-byte derived key, base64-encoded for Fernet compatibility.
         """
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -100,7 +95,9 @@ class BackupService:
             salt=salt,
             iterations=100_000,
         )
-        return kdf.derive(password.encode("utf-8"))
+        raw_key = kdf.derive(password.encode("utf-8"))
+        # Fernet requires a 32-byte url-safe base64-encoded key
+        return base64.urlsafe_b64encode(raw_key)
 
     def create_backup(self, encrypt: bool = True, password: Optional[str] = None) -> Path:
         """
@@ -358,8 +355,12 @@ class BackupService:
                 if not password:
                     return False
 
-            temp_db = self._decrypt_file(backup_path, password)
-            source_path = temp_db
+            try:
+                temp_db = self._decrypt_file(backup_path, password)
+                source_path = temp_db
+            except Exception:
+                # Decryption failed (wrong password, corrupted file, etc.)
+                return False
         else:
             source_path = backup_path
             temp_db = None
