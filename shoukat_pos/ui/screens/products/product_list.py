@@ -104,13 +104,15 @@ class ProductListScreen(ctk.CTkFrame):
         self.product_table = DataTable(self.table_frame, columns)
         self.product_table.grid(row=0, column=0, sticky="nsew")
         
-        # Empty state (hidden by default)
+        # Empty state (hidden by default) - use grid instead of pack to avoid geometry manager conflicts
         self.empty_state = EmptyState(
             self,
             "No products found",
             "Add Your First Product",
             lambda: self.router.navigate_to("add_product")
         )
+        self.empty_state.grid(row=2, column=0, sticky="nsew", padx=20, pady=10)
+        self.empty_state.grid_remove()  # Hide initially
         
         self.theme.apply_to_widget(self, bg_key="bg")
     
@@ -163,10 +165,10 @@ class ProductListScreen(ctk.CTkFrame):
             if rows:
                 self.product_table.set_data(rows)
                 self.product_table.grid()
-                self.empty_state.pack_forget()
+                self.empty_state.grid_remove()
             else:
                 self.product_table.grid_remove()
-                self.empty_state.pack(expand=True, fill="both")
+                self.empty_state.grid()
                 
         except Exception as e:
             print(f"Error loading products: {e}")
