@@ -1,0 +1,3 @@
+"""Hardware integration package."""
+
+pass
