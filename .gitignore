@@ -2,65 +2,40 @@
 # Database files
 *.db
 
-# Environment variables
-.env
-.env.local
-*.env.*
-
-# Logs
-*.log
-
-# Temporary files
-*.tmp
-*.temp
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Dependencies
-node_modules/
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
+env/
 venv/
 .venv/
-env/
-ENV/
-
-# Build outputs
-build/
-dist/
-*.egg-info/
+.ENV
+.env
+*.env
+*.log
+*.pot
+*.pyc
+*.pyo
+__pycache__/
 .coverage
-htmlcov/
-coverage/
-
-# Testing
+.htmlcov/
+.tox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
 .pytest_cache/
 .mypy_cache/
-.nyc_output/
-coverage/
 
-# Compiled Python
-*.so
-*.dylib
-*.dll
+# IDE
+.vscode/
+.idea/
 
-# Compressed archives
-*.zip
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.gz
-*.rar
-*.7z
+# OS
+.DS_Store
+Thumbs.db
 ```
