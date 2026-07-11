@@ -16,7 +16,7 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from shoukat_pos.utils.update_verifier import UpdateChecker
+from utils.update_verifier import UpdateChecker
 
 
 class TestVersionComparison:
@@ -146,7 +146,7 @@ class TestSHA256Verification:
 class TestUpdateChecking:
     """Test update checking functionality (with mocked network)."""
 
-    @patch('shoukat_pos.utils.update_verifier.urllib.request.urlopen')
+    @patch('utils.update_verifier.urllib.request.urlopen')
     def test_check_for_update_available(self, mock_urlopen: MagicMock) -> None:
         """Test that available updates are detected."""
         mock_response = MagicMock()
@@ -166,7 +166,7 @@ class TestUpdateChecking:
         assert result is not None
         assert result["latest_version"] == "2.0.0"
 
-    @patch('shoukat_pos.utils.update_verifier.urllib.request.urlopen')
+    @patch('utils.update_verifier.urllib.request.urlopen')
     def test_check_for_no_update(self, mock_urlopen: MagicMock) -> None:
         """Test that no update is returned when current version is latest."""
         mock_response = MagicMock()
@@ -185,7 +185,7 @@ class TestUpdateChecking:
         
         assert result is None
 
-    @patch('shoukat_pos.utils.update_verifier.urllib.request.urlopen')
+    @patch('utils.update_verifier.urllib.request.urlopen')
     def test_check_for_update_network_error(self, mock_urlopen: MagicMock) -> None:
         """Test that network errors are handled gracefully."""
         mock_urlopen.side_effect = Exception("Network error")
@@ -199,7 +199,7 @@ class TestUpdateChecking:
 class TestDownloadUpdate:
     """Test download functionality (with mocked network)."""
 
-    @patch('shoukat_pos.utils.update_verifier.urllib.request.urlopen')
+    @patch('utils.update_verifier.urllib.request.urlopen')
     def test_download_update_success(self, mock_urlopen: MagicMock) -> None:
         """Test successful download."""
         mock_response = MagicMock()
@@ -222,7 +222,7 @@ class TestDownloadUpdate:
             if temp_path.exists():
                 temp_path.unlink()
 
-    @patch('shoukat_pos.utils.update_verifier.urllib.request.urlopen')
+    @patch('utils.update_verifier.urllib.request.urlopen')
     def test_download_update_network_error(self, mock_urlopen: MagicMock) -> None:
         """Test download handles network errors."""
         mock_urlopen.side_effect = Exception("Download failed")

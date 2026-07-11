@@ -1,4 +1,7 @@
 ```
+# Database files
+*.db
+
 # Python
 __pycache__/
 *.pyc
@@ -8,6 +11,13 @@ __pycache__/
 env/
 venv/
 .venv/
+.ENV
+.env
+.env.local
+.env.*
+.venv.bak
+env.bak
+.python-version
 pip-log.txt
 pip-delete-this-directory.txt
 .tox/
@@ -18,40 +28,11 @@ nosetests.xml
 coverage.xml
 *.cover
 *.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
-*.so
-.TemporaryItems
-.deps
-.project
-.pydevproject
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+.git/modules/
+*.sublime-project
+*.sublime-workspace
+.pytest_cache/
+.hypothesis/
 .DS_Store
 Thumbs.db
-
-# Build artifacts
-build/
-dist/
-*.egg-info/
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Testing
-.pytest_cache/
-.coverage*
-htmlcov/
-
-# Deployment
-*.spec
-*.iss
-*.bat
 ```
