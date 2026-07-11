@@ -165,9 +165,9 @@ class DashboardScreen(ctk.CTkFrame):
             self.today_sales_card.update_value(f"Rs. {daily_report.total_sales // 100:,}")
             self.today_transactions_card.update_value(str(daily_report.transaction_count))
             
-            # Low stock
-            low_stock = self.inventory_service.get_low_stock_variants(conn)
-            count = len(low_stock)
+            # Low stock - call method on service instance, not module
+            low_stock = self.inventory_service.get_low_stock_variants()
+            count = len(low_stock) if low_stock else 0
             self.low_stock_card.update_value(str(count))
             if count > 0:
                 self.low_stock_card.configure(fg_color=self.theme.get_color("warning"))
