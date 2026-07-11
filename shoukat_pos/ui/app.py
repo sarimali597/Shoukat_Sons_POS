@@ -221,24 +221,51 @@ class POSApp(ctk.CTk):
         self.main_area.pack(side="right", fill="both", expand=True)
 
     def _register_default_screens(self) -> None:
-        """Register default screen placeholders."""
-
+        """Register default screen implementations."""
+        # Dashboard
+        def dashboard_factory() -> ctk.CTkFrame:
+            from ui.screens.dashboard_screen import DashboardScreen
+            user_info = {"username": "Admin", "user_id": 1, "role": "admin"}
+            return DashboardScreen(self.main_area, user_info, self.router)
+        
+        self.router.register_screen("dashboard", dashboard_factory)
+        
+        # Product screens
+        def product_list_factory() -> ctk.CTkFrame:
+            from ui.screens.products.product_list import ProductListScreen
+            return ProductListScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("products", product_list_factory)
+        
+        def quick_restock_factory() -> ctk.CTkFrame:
+            from ui.screens.products.quick_restock import QuickRestockScreen
+            return QuickRestockScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("quick_restock", quick_restock_factory)
+        
+        def print_labels_factory() -> ctk.CTkFrame:
+            from ui.screens.products.print_labels import PrintLabelsScreen
+            return PrintLabelsScreen(self.main_area, self.router, {"username": "Admin", "user_id": 1, "role": "admin"})
+        
+        self.router.register_screen("print_labels", print_labels_factory)
+        
+        # Placeholder screens for now (to be implemented in subsequent stages)
         def make_placeholder(title: str) -> Callable[[], ctk.CTkFrame]:
             def factory() -> ctk.CTkFrame:
                 frame = ctk.CTkFrame(self.main_area)
                 label = ctk.CTkLabel(
                     frame,
-                    text=title,
+                    text=f"{title} Screen - Coming Soon",
                     font=self._theme.get_font("heading"),
                 )
                 label.pack(expand=True)
                 return frame
-
+            
             return factory
-
-        screens = ["dashboard", "products", "sales", "customers", "reports", "settings"]
+        
+        screens = ["sales", "customers", "reports", "settings", "add_product"]
         for screen in screens:
-            self.router.register_screen(screen, make_placeholder(screen.title()))
+            self.router.register_screen(screen, make_placeholder(screen.replace("_", " ").title()))
 
     def _toggle_theme(self) -> None:
         """Toggle between light and dark modes."""
