@@ -23,6 +23,15 @@ wheels/
 
 # Database
 *.db
+*.db-journal
+
+# Environment
+.env
+.env.local
+.env.*
+.venv/
+venv/
+ENV/
 
 # Testing
 .pytest_cache/

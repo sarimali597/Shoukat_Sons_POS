@@ -52,14 +52,8 @@ def connection_manager(tmp_path: Path) -> Generator[ConnectionManager, None, Non
     ConnectionManager._instance = None
     ConnectionManager._lock = threading.Lock()
     
-    cm = ConnectionManager(db_path=tmp_path / "test.db")
+    cm = ConnectionManager(database_path=tmp_path / "test.db")
     cm.initialize_database()
-    
-    # Initialize schema and seed data
-    conn = cm.get_read_connection()
-    create_tables(conn)
-    seed_data(conn)
-    conn.close()
     
     yield cm
     
